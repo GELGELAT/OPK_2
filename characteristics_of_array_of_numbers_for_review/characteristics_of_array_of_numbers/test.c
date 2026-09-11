@@ -6,7 +6,7 @@ int main(void)
     float test_arr[ARR_AMOUNT_TEST][NUMBERS_AMOUNT_TEST] = 
     {
         {1,2,3,4,5},
-        {1,2,69,4,5}
+        {1,2,69,0,5}
     };
     for (int i=0;i<ARR_AMOUNT_TEST;i++)
     {
