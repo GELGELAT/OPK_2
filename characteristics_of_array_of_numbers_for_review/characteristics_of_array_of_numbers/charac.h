@@ -13,3 +13,9 @@ float find_max(float *numbers_array, int amount);
 float find_arithmetic_mean(float *numbers_array, int amount);
 
 float find_median(float *numbers_array, int amount);
+
+float find_root_mean_square_deviation(float *numbers_array, int amount, float arithmetic_mean);
+
+float find_maximum_consecutive_identical_elements(float *numbers_array, int amount);
+
+float find_maximum_length_monotonic_segment(float *numbers_array, int amount);
