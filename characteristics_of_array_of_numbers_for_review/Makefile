@@ -3,7 +3,7 @@
 # ========================================
 CC = gcc
 BUILD_DIR = build
-SRC_DIRS = characteristics_of_array_of_numbers #<------------- folders with .c files
+SRC_DIRS = characteristics_of_array_of_numbers C_rand_work_lib_scripts #<------------- folders with .c files
 TARGET = characteristics_of_array_of_numbers.exe #<------------- program name
 
 # ========================================

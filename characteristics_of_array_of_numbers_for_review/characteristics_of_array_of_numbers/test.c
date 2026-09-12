@@ -1,8 +1,14 @@
 #include "charac.h"
+#include "rand_work_lib.h"
+#include <time.h>
+#include <stdio.h>
+#include <windows.h>
+
 #define ARR_AMOUNT_TEST 9
 #define NUMBERS_AMOUNT_TESTS 10
 int main(void)
 {
+    srand((unsigned)time(NULL) ^ GetTickCount());
     float test_arr[ARR_AMOUNT_TEST][NUMBERS_AMOUNT_TESTS] = 
     {
         {5,9,69,7,-69},
@@ -38,4 +44,13 @@ int main(void)
         }
         printf("\n");
     }
+    int big_amount = 1000;
+    float* big_arr = create_rand_with_in_arr_f(big_amount,-100,100);
+    float* chara_for_big_arr = characteristics_array_numbers(big_arr,big_amount);
+    printf("%s","big arr");
+    for (int j =0;j<7;j++)
+    {
+        printf("%d)%f\t",j+1,chara_for_big_arr[j]);
+    }
+
 }
