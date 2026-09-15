@@ -2,11 +2,16 @@
 
 int main(void)
 {
-    char *test_strs[8] = {"", "((()))()(())", "", "()", "dasda()", "()((()))", "()()(()))", "(sad)gaf(dsad)(())"};
-    int test_value[8] = {1,1,1,1,1,1,0,1};
-    for (int i = 0; i < 8; i++)
-    {
-        bool balanced = is_balanced(test_strs[i]);
-        printf("test %d) current value -> %d|should be ->%d \n", i,balanced,test_value[i]);
-    }
+    assert(is_balanced("") == true);
+    assert(is_balanced("()") == true);
+    assert(is_balanced("((()))()(())") == true);
+    assert(is_balanced("(()())") == true);
+    assert(is_balanced("(45(ragfe()(435sag)435)435345(sag))(s)fasf(asf(fas)jhgj)") == true);
+
+
+    assert(is_balanced(")(") == false);
+    assert(is_balanced("((())))") == false);
+    assert(is_balanced("(()") == false);
+        assert(is_balanced("(45(ragfe()(435sag)435)435345sag))(s)fasf(asf(fas)jhgj)") == false);
+
 }

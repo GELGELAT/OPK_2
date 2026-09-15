@@ -20,7 +20,7 @@ bool is_balanced(char *string)
 
         i++;
     }
-    if (balance < 0)
+    if (balance > 0)
     {
         return false;
     }
