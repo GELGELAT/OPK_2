@@ -5,6 +5,10 @@
 float* create_rand_with_in_arr_f(int amount, float min,float max)
 {
     float* arr = malloc(sizeof(float)*amount);
+    if(arr==NULL)
+    {
+        return NULL;
+    }
     for(int i =0;i<amount;i++)
     {
         arr[i] = rand_with_in_f(min,max);

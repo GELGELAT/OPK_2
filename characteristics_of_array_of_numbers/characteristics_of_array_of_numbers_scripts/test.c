@@ -52,5 +52,5 @@ int main(void)
     {
         printf("%d)%f\t",j+1,chara_for_big_arr[j]);
     }
-
+    free(big_arr);
 }

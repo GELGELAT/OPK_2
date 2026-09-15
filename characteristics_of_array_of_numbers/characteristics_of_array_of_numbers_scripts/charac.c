@@ -1,7 +1,6 @@
 #include "charac.h"
-#define UP 1
-#define DOWN 0
-#define NONE 0
+#include "sort_work_lib.h"
+#include <stdlib.h>
 /*
 1 Минимальное число
 2 Максимальное число
@@ -39,7 +38,6 @@ float find_max(float* numbers_array, int amount)
 }
 float find_arithmetic_mean(float* numbers_array, int amount)
 {
-    float arithmetic_mean_n;
     float sum=0;
     for (int i =0;i<amount;i++)
     {
@@ -49,14 +47,29 @@ float find_arithmetic_mean(float* numbers_array, int amount)
 }
 float find_median(float* numbers_array, int amount)
 {
+    float* copy_array = malloc(sizeof(float)*amount);
+    if(copy_array==NULL)
+    {
+        return NAN;
+    }
+    float median;
+    for (int i=0;i<amount;i++)
+    {
+        copy_array[i]=numbers_array[i];
+    }
+    qsort(copy_array,amount,sizeof(float),cmp_float);
     if(amount%2==0)
     {
-        return (numbers_array[amount/2-1]+numbers_array[amount/2])/2;
+        median = (copy_array[amount/2-1]+copy_array[amount/2])/2;
+        free(copy_array);
+        return median;
     }
     else
     {
         
-        return numbers_array[amount/2];
+        median= copy_array[amount/2];
+        free(copy_array);
+        return median;
     }
 }
 float find_root_mean_square_deviation(float* numbers_array, int amount, float arithmetic_mean)
@@ -72,7 +85,7 @@ float find_root_mean_square_deviation(float* numbers_array, int amount, float ar
     return root_mean_square_deviation_n;
 
 }
-float find_maximum_consecutive_identical_elements(float* numbers_array, int amount)
+int find_maximum_consecutive_identical_elements(float* numbers_array, int amount)
 {
     int identical_elements =1;
     int max_identical_elements = 1;
@@ -97,7 +110,7 @@ float find_maximum_consecutive_identical_elements(float* numbers_array, int amou
     }
     return max_identical_elements;
 }
-float find_maximum_length_monotonic_segment(float* numbers_array, int amount)
+int find_maximum_length_monotonic_segment(float* numbers_array, int amount)
 {
     int monotonic_segment =1;
     int max_monotonic_segment = 1;
