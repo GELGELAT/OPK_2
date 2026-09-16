@@ -5,7 +5,7 @@
 float* create_rand_with_in_arr_f(int amount, float min,float max)
 {
     float* arr = malloc(sizeof(float)*amount);
-    if(arr==NULL)
+    if(!arr)
     {
         return NULL;
     }

@@ -1,6 +1,7 @@
 #include "charac.h"
 #include "sort_work_lib.h"
 #include <stdlib.h>
+#include <string.h>
 /*
 1 Минимальное число
 2 Максимальное число
@@ -53,10 +54,7 @@ float find_median(float* numbers_array, int amount)
         return NAN;
     }
     float median;
-    for (int i=0;i<amount;i++)
-    {
-        copy_array[i]=numbers_array[i];
-    }
+    memcpy(copy_array,numbers_array,amount*sizeof(float));
     qsort(copy_array,amount,sizeof(float),cmp_float);
     if(amount%2==0)
     {
@@ -143,7 +141,7 @@ int find_maximum_length_monotonic_segment(float* numbers_array, int amount)
         }
         else
         {
-            monotonic_segment=1;
+            monotonic_segment=2;
             monotonic_segment_type = current_monotonic_segment_type;
         }
         old=current;

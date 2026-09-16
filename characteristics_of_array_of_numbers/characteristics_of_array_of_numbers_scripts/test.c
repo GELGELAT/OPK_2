@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <windows.h>
 
-#define ARR_AMOUNT_TEST 9
+#define ARR_AMOUNT_TEST 10
 #define NUMBERS_AMOUNT_TESTS 10
 int main(void)
 {
@@ -19,14 +19,15 @@ int main(void)
         {},
         {69},
         {1,2,3,1},
-        {2,3}
+        {2,3},
+        {1, 2, 0, -1}
     };
     int numbers_amount_test[ARR_AMOUNT_TEST] = 
     {
-        5,5,5,5,5,0,1,4,2
+        5,5,5,5,5,0,1,4,2,4
     };
-    char* str[ARR_AMOUNT_TEST] = {"min -69, max 69","SKO 0","ident_elem 3","monotonic 3","any","amount 0","one",
-    "median 2.5","median 2.5"};
+    //char* str[ARR_AMOUNT_TEST] = {"min -69, max 69","SKO 0","ident_elem 3","monotonic 3","any","amount 0","one",
+    //"median 2.5","median 2.5"};
     for (int i=0;i<ARR_AMOUNT_TEST;i++)
     {
         
@@ -37,7 +38,8 @@ int main(void)
             printf("\n");
             continue;
         }
-        printf("%s - ",str[i]);
+        printf("%d ",i);
+        //printf("%s - ",str[i]);
         for (int j =0;j<7;j++)
         {
             printf("%d)%f\t",j+1,chara_arr[j]);
