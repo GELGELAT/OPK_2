@@ -49,6 +49,21 @@ void assert_sort_char(char* arr,int amount)
     }
     
 }
+void assert_sort_double(double* arr,int amount)
+{
+    j++;
+    printf("%d\n",j);
+    selection_sort(arr,amount,sizeof(double),cmp_double);
+    if (amount==0)
+    {
+        return;
+    }
+    for (size_t i = 0; i < amount-1; i++)
+    {
+        assert(arr[i]<=arr[i+1]);
+    }
+    
+}
 void int_test()
 {
     int test_r[] = {5,69,-69,0,1};
@@ -111,7 +126,7 @@ void char_test()
     assert_sort_char(test_m2,4);
     
 }
-void float_test()
+void double_test()
 {
     double test_r[] = {5,69,-69,0,1};
     double test_0[] = {};
@@ -122,14 +137,14 @@ void float_test()
     double test_d3[] = {0.6,0.7,0.1,0.2,0.1};
     double test_m1[] = {1.6,2,3,4,5};
     double test_m2[] = {5,4,3,2,1};
-    assert_sort_float(test_r,5);
-    assert_sort_float(test_0,0);
-    assert_sort_float(test_1,1);
-    assert_sort_float(test_2,2);
-    assert_sort_float(test_d1,5);
-    assert_sort_float(test_d2,5);
-    assert_sort_float(test_d3,5);
-    assert_sort_float(test_m1,5);
-    assert_sort_float(test_m2,5);
+    assert_sort_double(test_r,5);
+    assert_sort_double(test_0,0);
+    assert_sort_double(test_1,1);
+    assert_sort_double(test_2,2);
+    assert_sort_double(test_d1,5);
+    assert_sort_double(test_d2,5);
+    assert_sort_double(test_d3,5);
+    assert_sort_double(test_m1,5);
+    assert_sort_double(test_m2,5);
     
 }
