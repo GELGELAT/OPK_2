@@ -36,7 +36,7 @@ char* rand_arr_create_with_in_char(int amount, char min,char max)
     {
         arr[i] = rand_with_in_char(min,max);
     }
-    arr[amount+1]='\0';
+    arr[amount]='\0';
     return arr;
 }
 char** rand_arr_create_with_in_string(int amount,int min_len,int max_len, char min,char max)
