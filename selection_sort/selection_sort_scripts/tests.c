@@ -9,4 +9,5 @@ int main(void)
     double_test();
     string_test();
     printf("accept\n");
+    
 }

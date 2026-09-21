@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "selection_sort.h"
 #include <stdio.h>
+#include "rand_work_lib.h"
 //test_
 int j=0;
 void assert_sort_int(int* arr,int amount)
@@ -107,6 +108,8 @@ void int_test()
     assert_sort_int(test_d2,5);
     assert_sort_int(test_m1,5);
     assert_sort_int(test_m2,5);
+    int* big_test = rand_arr_create_with_in_int(100,-100,100);
+    assert_sort_int(big_test,100);
     
 }
 void float_test()
@@ -129,7 +132,8 @@ void float_test()
     assert_sort_float(test_d3,5);
     assert_sort_float(test_m1,5);
     assert_sort_float(test_m2,5);
-    
+    float* big_test = create_rand_with_in_arr_f(100,-100,100);
+    assert_sort_float(big_test,100);
 }
 void char_test()
 {
@@ -149,6 +153,8 @@ void char_test()
     assert_sort_char(test_d2,5);
     assert_sort_char(test_m1,4);
     assert_sort_char(test_m2,4);
+    char* big_test = rand_arr_create_with_in_char(100,'a','z');
+    assert_sort_char(big_test,100);
     
 }
 void double_test()
@@ -171,6 +177,8 @@ void double_test()
     assert_sort_double(test_d3,5);
     assert_sort_double(test_m1,5);
     assert_sort_double(test_m2,5);
+    double* big_test = rand_arr_create_with_in_d(100,-100,100);
+    assert_sort_double(big_test,100);
     
 }
 void string_test()
@@ -186,7 +194,8 @@ void string_test()
     assert_sort_string(test_1,1);
     assert_sort_string(test_2,2);
     assert_sort_string(test_d1,3);
-
+    char** big_test = rand_arr_create_with_in_string(100,0,100,'a','z');
+    assert_sort_string(big_test,100);
  
     
 }

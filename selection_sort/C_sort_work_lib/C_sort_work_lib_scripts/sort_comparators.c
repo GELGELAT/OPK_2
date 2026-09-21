@@ -51,8 +51,8 @@ int cmp_char(const void *a,const void *b)
 }
 int cmp_string(const void *a,const void *b)
 {
-    char* x = *(const char**)a;
-    char* y = *(const char**)b;
+    char* x = *( char**)a;
+    char* y = *( char**)b;
     int i =0;
     int x_len=0;
     int y_len=0;
