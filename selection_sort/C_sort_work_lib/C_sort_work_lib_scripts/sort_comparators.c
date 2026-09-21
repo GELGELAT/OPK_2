@@ -1,5 +1,6 @@
 #include "sort_comparators.h"
 #include <math.h>
+#include <stdio.h>
 #define EPSILON_F 0.00001
 #define EPSILON_D 0.00000001
 int cmp_float(const void *a,const void *b)
@@ -50,8 +51,8 @@ int cmp_char(const void *a,const void *b)
 }
 int cmp_string(const void *a,const void *b)
 {
-    char* x = (const char*)a;
-    char* y = (const char*)b;
+    char* x = *(const char**)a;
+    char* y = *(const char**)b;
     int i =0;
     int x_len=0;
     int y_len=0;

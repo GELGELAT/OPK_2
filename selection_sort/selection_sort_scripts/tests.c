@@ -7,5 +7,6 @@ int main(void)
     float_test();
     char_test();
     double_test();
+    string_test();
     printf("accept\n");
 }

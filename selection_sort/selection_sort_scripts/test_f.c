@@ -64,6 +64,31 @@ void assert_sort_double(double* arr,int amount)
     }
     
 }
+void assert_sort_string(char** arr,int amount)
+{
+    j++;
+    printf("%d\n",j);
+    selection_sort(arr,amount,sizeof(char*),cmp_string);
+    if (amount==0)
+    {
+        return;
+    }
+    for (size_t i = 0; i < amount-1; i++)
+    {
+        int len1=0;
+        int len2=0;
+        while (arr[i][len1]!='\0')
+        {
+            len1+=1;
+        }
+        while (arr[i+1][len2]!='\0')
+        {
+            len2+=1;
+        }
+        assert(len1<=len2);
+    }
+    
+}
 void int_test()
 {
     int test_r[] = {5,69,-69,0,1};
@@ -146,5 +171,22 @@ void double_test()
     assert_sort_double(test_d3,5);
     assert_sort_double(test_m1,5);
     assert_sort_double(test_m2,5);
+    
+}
+void string_test()
+{
+    char* test_r[] = {"asd","a","as"};
+    char* test_0[] = {};
+    char *test_1[] = {"bad"};
+    char *test_2[] = {"asd","fd"};
+    char *test_d1[] = {"asd","sdf","dfg"};
+
+    assert_sort_string(test_r,3);
+    assert_sort_string(test_0,0);
+    assert_sort_string(test_1,1);
+    assert_sort_string(test_2,2);
+    assert_sort_string(test_d1,3);
+
+ 
     
 }
