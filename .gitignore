@@ -1,0 +1,6 @@
+#убрать #
+
+/.vscode/
+/Makefile
+/build/
+*.exe
