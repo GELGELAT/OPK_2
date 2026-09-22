@@ -3,13 +3,15 @@
 #include "selection_sort.h"
 #include <stdio.h>
 #include "rand_work_lib.h"
+#include "sort_comparators.h"
+
 //test_
-int j=0;
-void assert_sort_int(int* arr,int amount)
+void assert_sort_int(int* arr,size_t amount)
 {
-    j++;
-    printf("%d\n",j);
-    selection_sort(arr,amount,sizeof(int),cmp_int);
+
+     
+      
+    selection_sort(arr,(size_t)amount,sizeof(int),cmp_int);
     if (amount==0)
     {
         return;
@@ -20,10 +22,10 @@ void assert_sort_int(int* arr,int amount)
     }
     
 }
-void assert_sort_float(float* arr,int amount)
+void assert_sort_float(float* arr,size_t amount)
 {
-    j++;
-    printf("%d\n",j);
+     
+      
     selection_sort(arr,amount,sizeof(float),cmp_float);
     if (amount==0)
     {
@@ -35,10 +37,10 @@ void assert_sort_float(float* arr,int amount)
     }
     
 }
-void assert_sort_char(char* arr,int amount)
+void assert_sort_char(char* arr,size_t amount)
 {
-    j++;
-    printf("%d\n",j);
+     
+      
     selection_sort(arr,amount,sizeof(char),cmp_char);
     if (amount==0)
     {
@@ -50,10 +52,10 @@ void assert_sort_char(char* arr,int amount)
     }
     
 }
-void assert_sort_double(double* arr,int amount)
+void assert_sort_double(double* arr,size_t amount)
 {
-    j++;
-    printf("%d\n",j);
+     
+      
     selection_sort(arr,amount,sizeof(double),cmp_double);
     if (amount==0)
     {
@@ -65,10 +67,10 @@ void assert_sort_double(double* arr,int amount)
     }
     
 }
-void assert_sort_string(char** arr,int amount)
+void assert_sort_string(char** arr,size_t amount)
 {
-    j++;
-    printf("%d\n",j);
+     
+      
     selection_sort(arr,amount,sizeof(char*),cmp_string);
     if (amount==0)
     {

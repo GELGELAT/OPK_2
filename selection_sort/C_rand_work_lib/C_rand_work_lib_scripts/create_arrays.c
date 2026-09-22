@@ -5,6 +5,10 @@
 float* create_rand_with_in_arr_f(int amount, float min,float max)
 {
     float* arr = malloc(sizeof(float)*amount);
+    if(!arr)
+    {
+        return NULL;
+    }
     for(int i =0;i<amount;i++)
     {
         arr[i] = rand_with_in_f(min,max);
@@ -14,6 +18,10 @@ float* create_rand_with_in_arr_f(int amount, float min,float max)
 double* rand_arr_create_with_in_d(int amount, float min,float max)
 {
     double* arr = malloc(sizeof(double)*amount);
+    if(!arr)
+    {
+        return NULL;
+    }
     for(int i =0;i<amount;i++)
     {
         arr[i] = rand_with_in_d(min,max);
@@ -23,6 +31,10 @@ double* rand_arr_create_with_in_d(int amount, float min,float max)
 int* rand_arr_create_with_in_int(int amount, int min,int max)
 {
     int* arr = malloc(sizeof(int)*amount);
+    if(!arr)
+    {
+        return NULL;
+    }
     for(int i =0;i<amount;i++)
     {
         arr[i] = rand_with_in_int(min,max);
@@ -32,6 +44,10 @@ int* rand_arr_create_with_in_int(int amount, int min,int max)
 char* rand_arr_create_with_in_char(int amount, char min,char max)
 {
     char* arr = malloc(sizeof(char)*(amount+1));
+    if(!arr)
+    {
+        return NULL;
+    }
     for(int i =0;i<amount;i++)
     {
         arr[i] = rand_with_in_char(min,max);
@@ -42,6 +58,10 @@ char* rand_arr_create_with_in_char(int amount, char min,char max)
 char** rand_arr_create_with_in_string(int amount,int min_len,int max_len, char min,char max)
 {
     char** arr = malloc(sizeof(char*)*amount);
+    if(!arr)
+    {
+        return NULL;
+    }
     for(int i =0;i<amount;i++)
     {
         int rand_len = rand_with_in_int(min_len,max_len);

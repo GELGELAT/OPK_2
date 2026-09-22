@@ -1,9 +1,16 @@
 #pragma once
-void assert_sort_int(int *arr, int amount);
-void assert_sort_float(float *arr, int amount);
-void assert_sort_char(char *arr, int amount);
-void assert_sort_double(double *arr, int amount);
-void assert_sort_string(char **arr, int amount);
+#include <stddef.h>
+
+void assert_sort_int(int *arr, size_t amount);
+
+void assert_sort_float(float *arr, size_t amount);
+
+void assert_sort_char(char *arr, size_t amount);
+
+void assert_sort_double(double *arr, size_t amount);
+
+void assert_sort_string(char **arr, size_t amount);
+
 void int_test();
 
 void float_test();
