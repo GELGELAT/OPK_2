@@ -35,6 +35,20 @@ int cmp_int(const void *a,const void *b)
     }
     return 0;
 }
+size_t cmp_size_t(const void *a,const void *b)
+{
+    size_t x = *(const size_t*)a;
+    size_t y = *(const size_t*)b;
+    if (x<y)
+    {
+        return -1;
+    }
+    if (x>y)
+    {
+        return 1;
+    }
+    return 0;
+}
 int cmp_char(const void *a,const void *b)
 {
     char x = *(const char*)a;
