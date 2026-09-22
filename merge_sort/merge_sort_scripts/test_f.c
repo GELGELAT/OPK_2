@@ -1,6 +1,6 @@
 #include "test_f.h"
 #include <assert.h>
-#include "selection_sort.h"
+#include "merge_sort.h"
 #include <stdio.h>
 #include "rand_work_lib.h"
 #include "sort_comparators.h"
@@ -11,7 +11,7 @@ void assert_sort_int(int* arr,size_t amount)
 
      
       
-    selection_sort(arr,(size_t)amount,sizeof(int),cmp_int);
+    merge_sort(arr,(size_t)amount,sizeof(int),cmp_int);
     if (amount==0)
     {
         return;
@@ -26,7 +26,7 @@ void assert_sort_float(float* arr,size_t amount)
 {
      
       
-    selection_sort(arr,amount,sizeof(float),cmp_float);
+    merge_sort(arr,amount,sizeof(float),cmp_float);
     if (amount==0)
     {
         return;
@@ -41,7 +41,7 @@ void assert_sort_char(char* arr,size_t amount)
 {
      
       
-    selection_sort(arr,amount,sizeof(char),cmp_char);
+    merge_sort(arr,amount,sizeof(char),cmp_char);
     if (amount==0)
     {
         return;
@@ -56,7 +56,7 @@ void assert_sort_double(double* arr,size_t amount)
 {
      
       
-    selection_sort(arr,amount,sizeof(double),cmp_double);
+    merge_sort(arr,amount,sizeof(double),cmp_double);
     if (amount==0)
     {
         return;
@@ -71,7 +71,7 @@ void assert_sort_string(char** arr,size_t amount)
 {
      
       
-    selection_sort(arr,amount,sizeof(char*),cmp_string);
+    merge_sort(arr,amount,sizeof(char*),cmp_string);
     if (amount==0)
     {
         return;
