@@ -8,9 +8,6 @@
 //test_
 void assert_sort_int(int* arr,size_t amount)
 {
-
-     
-      
     merge_sort(arr,(size_t)amount,sizeof(int),cmp_int);
     if (amount==0)
     {
