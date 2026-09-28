@@ -9,6 +9,7 @@ int boyer_moore(char* haystack, char* needle)
         return-1;
     }
     //длины строк
+    //длина текста и образца
     int len_hs=0, len_n=0;
     int hs_i=0,n_i=0;
     while (haystack[hs_i]!='\0')
@@ -28,27 +29,31 @@ int boyer_moore(char* haystack, char* needle)
     
     int* bc_t = build_bad_char_table(needle, len_n);
     int* gs_t=build_good_suffix_table(needle, len_n);
+    //нчальный сдвиг откуда сопост наша игла
     int hs_offset = 0;
     while (hs_offset<=len_hs-len_n)
     {
-        int n_offset =len_n-1;
+
+        int n_offset =len_n-1;//начинаем с права на лево
         while (n_offset>=0&&needle[n_offset]==haystack[hs_offset+n_offset])
         {
             n_offset--;
         }
         if(n_offset<0)
         {
+            //нашли
             free(bc_t);
             free(gs_t);
             return hs_offset;
         }
         else
         {
-            int index = haystack[hs_offset+n_offset];
-            int bad_offset = bc_t[index]-(len_n-1-n_offset);
+            //не нашли
+            int index = haystack[hs_offset+n_offset]; //олуч симвл
+            int bad_offset = bc_t[index]-(len_n-1-n_offset); //берём сдвиг из бс таблицы и хорошей
             int good_offset=gs_t[n_offset];
             int offset;
-            if(cmp_int(&bad_offset,&good_offset)==1)
+            if(cmp_int(&bad_offset,&good_offset)==1) //смотриим на сколько сдвиг
             {
                 offset=bad_offset;
             }
@@ -73,7 +78,7 @@ int* build_bad_char_table(char* needle,int len_n)
     {
         bad_char_table[i]=len_n;
     }
-    //заполняем
+    //заполняем по алгаритму
     for(int i=0;i<len_n;i++)
     {
         int cur_char = needle[i];
@@ -84,20 +89,20 @@ int* build_bad_char_table(char* needle,int len_n)
 
 int* build_good_suffix_table(char* needle,int len_n)
 {
-    int* offset = malloc(sizeof(int)*len_n);
+    int* offset = malloc(sizeof(int)*len_n); //наши сдвиги
     if(!offset) return NULL;
     for(int i=0;i<len_n;i++)
     {
         offset[i]=len_n;
     }
-    int* border = calloc(len_n+1,sizeof(int));
+    int* border = calloc(len_n+1,sizeof(int)); //самые большие совпадения постфикса и суфикса
     if(!border) return NULL;
 
     int i=len_n;
     int j=i+1;
     border[i]=j;
 
-    while (i>0)
+    while (i>0) //заполняем border по алгаритму
     {
         while (j<=len_n&&needle[i-1]!=needle[j-1])
         {
@@ -113,7 +118,7 @@ int* build_good_suffix_table(char* needle,int len_n)
         
     }
     j=border[0];
-    for(i=0;i<len_n-1;i++)
+    for(i=0;i<len_n-1;i++) //заполняем офсет по алга
     {
         if(offset[i]==len_n)
         {
