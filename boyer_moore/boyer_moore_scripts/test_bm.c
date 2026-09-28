@@ -1,23 +1,10 @@
 #include <assert.h>
 #include "test_bm.h"
-#include <stdio.h>
 #include "boyer_moore.h"
 
 void bm_tests()
 {
     
-    /*
-    Проверить реализацию тестами
-    Обеспечить корректную работу со следующими случаями:
-
-    пустая подстрока (needle == "") — вернуть -1;
-    подстрока длиннее строки (len(needle) > len(haystack)) — вернуть -1;
-    отсутствие подстроки в строке — вернуть -1.
-
-    char arr[]="saisisi";
-    char need[]="si";
-    printf("%d\n",boyer_moore(arr,need));
-    */
     char test_empty[]="";
     char need1[]="si";
     assert(boyer_moore(test_empty,need1)==-1);
