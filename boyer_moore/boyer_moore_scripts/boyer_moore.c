@@ -95,28 +95,33 @@ int* build_good_suffix_table(char* needle,int len_n)
     {
         offset[i]=len_n;
     }
-    int* border = calloc(len_n+1,sizeof(int)); //самые большие совпадения постфикса и суфикса
+    int* border = calloc(len_n+1,sizeof(int)); //на 1 граница префикса длиной i
+    //хранит длины границ самого большого суфикса
     if(!border) return NULL;
 
     int i=len_n;
-    int j=i+1;
-    border[i]=j;
+    int j=i+1;//для начала с самого дальнего
+    border[i]=j; 
 
-    while (i>0) //заполняем border по алгаритму
+    while (i>0) //проход по всем постфиксам
     {
-        while (j<=len_n&&needle[i-1]!=needle[j-1])
+        //пока текущий кандидат j не подходит как граница откатываться к меньшему кандидату
+        while (j<=len_n&&needle[i-1]!=needle[j-1])//1усл ещё в слове 2 усл сама проверка кандидата 
+            //i-1 последний символ в префиксе j-1 это конец другого префикс длиной j
+            
         {
-            if(offset[j-1]==len_n)
+            if(offset[j-1]==len_n)//установлен ли уже сдвиг для позиции
             {
                 offset[j-1]=j-i;
             }
-            j=border[j];
+            j=border[j];//кандидат j не подошёл пробуем меньший кандида который вложен в текущий
         }
         i--;
         j--;
         border[i]=j;
         
     }
+    //offset заполнялся частично только для позиций где j откатывался во внутреннем while
     j=border[0];
     for(i=0;i<len_n-1;i++) //заполняем офсет по алга
     {
