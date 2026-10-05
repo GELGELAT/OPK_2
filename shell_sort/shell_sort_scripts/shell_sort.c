@@ -7,9 +7,11 @@
 #include "any_type_arrays_work.h"
 #include <stdbool.h>
 #include<stdio.h>
-int current_mode=SEDJVIK;
+
+int current_mode=GEOMETRIC;
 void shell_sort(void* array,size_t amount,size_t size,int (*cmp)( const void *a, const void *b))
 {
+    int* finish_arr;
     size_t gap_arr[20]={};
     size_t k=0;
     size_t gap_amount = 0;
@@ -96,18 +98,35 @@ void shell_sort(void* array,size_t amount,size_t size,int (*cmp)( const void *a,
                 form_2[i]=pow(4,power_2)-3*pow(2,power_2)+1;
                 power_2++;
             }
-            int* finish_arr= merger_arrays(form_1,max_amount_1,form_2,max_amount_2,sizeof(int));
+            finish_arr= merger_arrays(form_1,max_amount_1,form_2,max_amount_2,sizeof(int));
             qsort(finish_arr,max_amount_1+max_amount_2,sizeof(int),cmp_int);
             k=max_amount_1+max_amount_2;
-            for(int i=0;i<k;i++)
-            {
-                printf("%d ",finish_arr[i]);
-            }
             flag_build=1;
         }
     }
+    else if (current_mode==GEOMETRIC)
+    {
+        gap_amount = amount/2;
+        gap_arr[k] = gap_amount;
+        k++;
+        while(1)
+        {
+            size_t power = 1;
+            if(gap_amount>0)
+            {
+                gap_amount = gap_amount/pow((k+1),power);
+                gap_arr[k] = gap_amount;
+                k++;
+                power++;
+            }
+            else break;
+        }
+        gap_arr[--k] = 1;
+        gap_arr[++k] = 0;
+        k=0;
+    }
     QueryPerformanceCounter(&start);
-    size_t gap = gap_arr[--k];
+    size_t gap = gap_arr[k];
     while(gap>0)
     {
         for(size_t i =gap;i<amount;i++)
@@ -127,7 +146,7 @@ void shell_sort(void* array,size_t amount,size_t size,int (*cmp)( const void *a,
             swap_two_any(ptr_slid(array,size,j),temp,size);
             free(temp);
         }
-        k--;
+        k++;
         gap = gap_arr[k];
     }
     QueryPerformanceCounter(&end); 

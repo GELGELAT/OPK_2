@@ -1,0 +1,42 @@
+size_arr[] = {100, 500, 1000, 2500, 5000, 10000, 50000}
+amount_tests=100
+
+SHELL MODE O(N^2)
+
+100 - avarage sort time: 0,000165
+500 - avarage sort time: 0,001556
+1000 - avarage sort time: 0,003651
+2500 - avarage sort time: 0,011886
+5000 - avarage sort time: 0,029923
+10000 - avarage sort time: 0,077081
+50000 - avarage sort time: 0,738286
+
+HIBBARD MODE O(N^(3/2))
+
+100 - avarage sort time: 0,000147
+500 - avarage sort time: 0,001232
+1000 - avarage sort time: 0,002465
+2500 - avarage sort time: 0,007141
+5000 - avarage sort time: 0,015647
+10000 - avarage sort time: 0,034156
+50000 - avarage sort time: 0,225284
+
+SEDJVIK MODE O(N^(4/3))
+
+100 - avarage sort time: 0,000143
+500 - avarage sort time: 0,000956
+1000 - avarage sort time: 0,002148
+2500 - avarage sort time: 0,005739
+5000 - avarage sort time: 0,013753
+10000 - avarage sort time: 0,029394
+50000 - avarage sort time: 0,169657
+
+GEOMETRIC MODE
+
+100 - avarage sort time: 0,000117
+500 - avarage sort time: 0,001084
+1000 - avarage sort time: 0,002327
+2500 - avarage sort time: 0,007710
+5000 - avarage sort time: 0,014945
+10000 - avarage sort time: 0,031036
+50000 - avarage sort time: 0,224511

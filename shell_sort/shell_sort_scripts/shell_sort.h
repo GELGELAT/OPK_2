@@ -10,5 +10,5 @@ enum Mode
     SEDJVIK,
     GEOMETRIC
 };
-
+extern int current_mode;
 void shell_sort(void *array, size_t amount, size_t size, int (*cmp)(const void *a, const void *b));
