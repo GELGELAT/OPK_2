@@ -1,0 +1,22 @@
+size_arr[] = {100, 500, 1000, 2500, 5000, 10000, 50000}
+amount_tests=100
+
+SHELL MODE
+
+100 - avarage sort time: 0.000157
+500 - avarage sort time: 0.001074
+1000 - avarage sort time: 0.003112
+2500 - avarage sort time: 0.009036
+5000 - avarage sort time: 0.023421
+10000 - avarage sort time: 0.060281
+50000 - avarage sort time: 0.576879
+
+HIBBARD MODE
+
+100 - avarage sort time: 0.000086
+500 - avarage sort time: 0.000779
+1000 - avarage sort time: 0.002053
+2500 - avarage sort time: 0.005171
+5000 - avarage sort time: 0.012875
+10000 - avarage sort time: 0.028589
+50000 - avarage sort time: 0.186446
