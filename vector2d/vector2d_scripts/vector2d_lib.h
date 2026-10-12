@@ -5,27 +5,22 @@ typedef struct Vector2D
     double x;
     double y;
 }Vector2D;
-typedef struct Vector3D
-{
-    double x;
-    double y;
-    double z;
-}Vector3D;
+
 
 Vector2D create_v2d(double x, double y);
 
-void to_str_v2d(Vector2D *vec);
+char* to_str_v2d(Vector2D *vec);
 
-void add_v2d(Vector2D *v1, Vector2D *v2, Vector2D *av);
+Vector2D* add_v2d(Vector2D *v1, Vector2D *v2);
 
-void sub_v2d(Vector2D *v1, Vector2D *v2, Vector2D *av);
+Vector2D* sub_v2d(Vector2D *v1, Vector2D *v2);
 
-void mul_v2d(Vector2D *v1, double scalar, Vector2D *av);
+Vector2D* mul_v2d(Vector2D *v1, double scalar);
 
-void dot_v2d(Vector2D *v1, Vector2D *v2, Vector2D *av);
+Vector2D* dot_v2d(Vector2D *v1, Vector2D *v2);
 
 double len_v2d(Vector2D *v1);
 
-void cross_v2d(Vector2D *v1, Vector2D *v2, Vector3D *av);
+double cross_v2d(Vector2D *v1, Vector2D *v2);
 
 void normalize_v2d(Vector2D *v1, Vector2D *av);

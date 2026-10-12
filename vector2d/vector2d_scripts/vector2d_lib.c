@@ -1,62 +1,71 @@
 #include "vector2d_lib.h"
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 Vector2D create_v2d(double x,double y)
 {
     return (Vector2D){x,y};
 }
 
-void to_str_v2d(Vector2D* vec)
+char* to_str_v2d(Vector2D* vec)
 {
-    if(!vec) return;
-    printf("x: %lf|y: %lf\n",vec->x,vec->y);
+    if(!vec) return NULL;
+    double x=vec->x;
+    double y=vec->y;
+
+    int size = snprintf(NULL, 0, "%lf %lf", x,y); //snprintf возращ кол симвл которая бы записала
+    char *ans = malloc(size + 1);
+    snprintf(ans, size + 1, "%lf %lf", x,y);
+    return ans;
+
 
 }
 
-void add_v2d(Vector2D* v1,Vector2D*v2,Vector2D* av)
+Vector2D* add_v2d(Vector2D* v1,Vector2D*v2)
 {
-    if(!v1||!v2||!av) return;
-    av->x=v1->x+v2->x;
-    av->y=v1->y+v2->y;
+    if(!v1||!v2) return NULL;
+    v1->x=v1->x+v2->x;
+    v1->y=v1->y+v2->y;
 }
-void sub_v2d(Vector2D* v1,Vector2D* v2,Vector2D* av)
+Vector2D* sub_v2d(Vector2D* v1,Vector2D* v2)
 {
-    if(!v1||!v2||!av) return;
-    av->x=v1->x-v2->x;
-    av->y=v1->y-v2->y;
+    if(!v1||!v2) return NULL;
+    v1->x=v1->x-v2->x;
+    v1->y=v1->y-v2->y;
 }
-void mul_v2d(Vector2D* v1,double scalar,Vector2D* av)
+Vector2D* mul_v2d(Vector2D* v1,double scalar)
 {
-    if(!v1||!av) return;
-    av->x=v1->x*scalar;
-    av->y=v1->y*scalar;
+    if(!v1) return NULL;
+    v1->x=v1->x*scalar;
+    v1->y=v1->y*scalar;
 }
-void dot_v2d(Vector2D* v1,Vector2D* v2,Vector2D* av)
+Vector2D* dot_v2d(Vector2D* v1,Vector2D* v2)
 {
-    if(!v1||!v2||!av) return;
-    av->x=v1->x*v2->x;
-    av->y=v1->y*v2->y;
+    if(!v1||!v2) return NULL;
+    v1->x=v1->x*v2->x;
+    v1->y=v1->y*v2->y;
 }
 double len_v2d(Vector2D* v1)
 {
     if(!v1) return 0;
     return sqrt((v1->x *v1->x)+(v1->y *v1->y));
 }
-void cross_v2d(Vector2D* v1,Vector2D* v2,Vector3D* av)
+double cross_v2d(Vector2D* v1,Vector2D* v2)
 {
-    if(!v1||!v2||!av) return;
-    av->x= 0;
-    av->y=0;
-    av->z=v1->x*v2->y-v1->y*v2->x;
+    if(!v1||!v2) return 0;
+    double ans = v1->x*v2->y-v1->y*v2->x;
+    if(ans<0)
+    {
+        return -ans;
+    }
+    return ans;
 
 }
 void normalize_v2d(Vector2D* v1,Vector2D* av)
 {
     if(!v1) return;
-    double x =v1->x;
-    double y= v1->y;
     double len = len_v2d(v1);
-    av->x=x/len;
-    av->y=y/len;
+    av->x=v1->x/len;
+    av->y=v1->y/len;
 
 }
