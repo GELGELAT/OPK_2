@@ -14,7 +14,9 @@ char* to_str_v2d(Vector2D* vec)
     double y=vec->y;
 
     int size = snprintf(NULL, 0, "%lf %lf", x,y); //snprintf возращ кол симвл которая бы записала
+    if(size<0)return NULL;
     char *ans = malloc(size + 1);
+    if(!ans)return NULL;
     snprintf(ans, size + 1, "%lf %lf", x,y);
     return ans;
 
