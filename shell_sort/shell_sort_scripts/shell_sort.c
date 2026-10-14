@@ -9,7 +9,7 @@
 #include<stdio.h>
 
 int current_mode=GEOMETRIC;
-void shell_sort(void* array,size_t amount,size_t size,int (*cmp)( const void *a, const void *b))
+void shell_sort(int work_mode, void* array,size_t size,size_t type_size,int (*cmp)( const void *a, const void *b))
 {
     int* finish_arr;
     size_t gap_arr[20]={};
@@ -22,7 +22,7 @@ void shell_sort(void* array,size_t amount,size_t size,int (*cmp)( const void *a,
         while(!flag_build)
         {
             gap_amount = gap_amount*2;
-            if(gap_amount<amount)
+            if(gap_amount<size)
             {
                 gap_arr[k]=gap_amount;
                 k++;
@@ -39,7 +39,7 @@ void shell_sort(void* array,size_t amount,size_t size,int (*cmp)( const void *a,
         while(!flag_build)
         {
             gap_amount = (int)pow(2,k)-1;
-            if(gap_amount<amount)
+            if(gap_amount<size)
             {
                 gap_arr[k]=gap_amount;
                 k++;
@@ -64,7 +64,7 @@ void shell_sort(void* array,size_t amount,size_t size,int (*cmp)( const void *a,
             while(1)
             {
                 gap_amount = 9*pow(4,power_1)-9*pow(2,power_1)+1;
-                if(gap_amount< amount)
+                if(gap_amount< size)
                 {
                     max_amount_1++;
                     power_1++;
@@ -75,7 +75,7 @@ void shell_sort(void* array,size_t amount,size_t size,int (*cmp)( const void *a,
             while(1)
             {
                 gap_amount = pow(4,power_2)-3*pow(2,power_2)+1;
-                if(gap_amount< amount)
+                if(gap_amount< size)
                 {
                     max_amount_2++;
                     power_2++;
@@ -99,14 +99,14 @@ void shell_sort(void* array,size_t amount,size_t size,int (*cmp)( const void *a,
                 power_2++;
             }
             finish_arr= merger_arrays(form_1,max_amount_1,form_2,max_amount_2,sizeof(int));
-            qsort(finish_arr,max_amount_1+max_amount_2,sizeof(int),cmp_int);
+            qsort(finish_arr,max_amount_1+max_amount_2,sizeof(int),cmp_int_inv);
             k=max_amount_1+max_amount_2;
             flag_build=1;
         }
     }
     else if (current_mode==GEOMETRIC)
     {
-        gap_amount = amount/2;
+        gap_amount = size/2;
         gap_arr[k] = gap_amount;
         k++;
         while(1)
@@ -129,21 +129,21 @@ void shell_sort(void* array,size_t amount,size_t size,int (*cmp)( const void *a,
     size_t gap = gap_arr[k];
     while(gap>0)
     {
-        for(size_t i =gap;i<amount;i++)
+        for(size_t i =gap;i<size;i++)
         {
-            void* temp = malloc(size);
-            memcpy(temp,ptr_slid(array,size,i),size);
+            void* temp = malloc(type_size);
+            memcpy(temp,ptr_slid(array,type_size,i),type_size);
             size_t j = i;
             while (j>= gap )
             {
-                if(cmp(ptr_slid(array,size,j-gap),temp)==-1)
+                if(cmp(ptr_slid(array,type_size,j-gap),temp)==-1)
                 {
                     break;
                 }
-                swap_two_any(ptr_slid(array,size,j),ptr_slid(array,size,j-gap),size);
+                swap_two_any(ptr_slid(array,type_size,j),ptr_slid(array,type_size,j-gap),type_size);
                 j = j-gap;
             }
-            swap_two_any(ptr_slid(array,size,j),temp,size);
+            swap_two_any(ptr_slid(array,type_size,j),temp,type_size);
             free(temp);
         }
         k++;

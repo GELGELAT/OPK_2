@@ -1,4 +1,4 @@
-/*
+
 #include <stdio.h>
 #include "test_f.h"
 
@@ -12,4 +12,4 @@ int main(void)
     printf("accept\n");
     
 }
-    */
+    

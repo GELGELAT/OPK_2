@@ -13,6 +13,7 @@ int cmp_char(const void *a, const void *b);
 int cmp_string(const void *a, const void *b);
 
 int cmp_double(const void *a, const void *b);
+int cmp_int_inv(const void *a, const void *b);
 
 #endif
 

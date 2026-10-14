@@ -8,7 +8,7 @@
 //test_
 void assert_sort_int(int* arr,size_t amount)
 {
-    shell_sort(arr,(size_t)amount,sizeof(int),cmp_int);
+    shell_sort(SHELL,arr,(size_t)amount,sizeof(int),cmp_int);
     if (amount==0)
     {
         return;
@@ -24,7 +24,7 @@ void assert_sort_float(float* arr,size_t amount)
 {
      
       
-    shell_sort(arr,amount,sizeof(float),cmp_float);
+    shell_sort(SHELL,arr,amount,sizeof(float),cmp_float);
     if (amount==0)
     {
         return;
@@ -39,7 +39,7 @@ void assert_sort_char(char* arr,size_t amount)
 {
      
       
-    shell_sort(arr,amount,sizeof(char),cmp_char);
+    shell_sort(SHELL,arr,amount,sizeof(char),cmp_char);
     if (amount==0)
     {
         return;
@@ -54,7 +54,7 @@ void assert_sort_double(double* arr,size_t amount)
 {
      
       
-    shell_sort(arr,amount,sizeof(double),cmp_double);
+    shell_sort(SHELL,arr,amount,sizeof(double),cmp_double);
     if (amount==0)
     {
         return;
@@ -69,7 +69,7 @@ void assert_sort_string(char** arr,size_t amount)
 {
      
       
-    shell_sort(arr,amount,sizeof(char*),cmp_string);
+    shell_sort(SHELL,arr,amount,sizeof(char*),cmp_string);
     if (amount==0)
     {
         return;

@@ -11,4 +11,5 @@ enum Mode
     GEOMETRIC
 };
 extern int current_mode;
-void shell_sort(void *array, size_t amount, size_t size, int (*cmp)(const void *a, const void *b));
+
+void shell_sort(int work_mode, void *array, size_t size, size_t type_size, int (*cmp)(const void *a, const void *b));

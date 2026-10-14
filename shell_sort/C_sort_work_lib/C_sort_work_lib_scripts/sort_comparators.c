@@ -1,6 +1,7 @@
 #include "sort_comparators.h"
 #include <math.h>
 #include <stdio.h>
+#include "sort_comparators.h"
 #define EPSILON_F 0.00001
 #define EPSILON_D 0.00000001
 int cmp_float(const void *a,const void *b)
@@ -30,6 +31,20 @@ int cmp_int(const void *a,const void *b)
         return -1;
     }
     if (x>y)
+    {
+        return 1;
+    }
+    return 0;
+}
+int cmp_int_inv(const void *a,const void *b)
+{
+    int x = *(const int*)a;
+    int y = *(const int*)b;
+    if (x>y)
+    {
+        return -1;
+    }
+    if (x<y)
     {
         return 1;
     }
