@@ -1,7 +1,8 @@
 #include "asserts_scripts.h"
 #include "stack.h"
-#include "create_arrays.h"
 #include "assert.h"
+#include "stdlib.h"
+
 void stack_asserts(void)
 {
     stack_assert_create_destroy();
@@ -20,9 +21,11 @@ void stack_assert_size_push()
 {
     Stack* test = stack_create();
     int** str = malloc(sizeof(int*)*5);
+    if(!str)return;
     for(int i=0;i<5;i++)
     {
-        str[i]= malloc(sizeof(int)*5);
+        str[i]= malloc(sizeof(int));
+        if(!str[i])return;
         *str[i] = i;
     }
     for(int i=0;i<5;i++)
@@ -32,15 +35,21 @@ void stack_assert_size_push()
     stack_push(test,NULL);
     assert(stack_size(test)==5);
     stack_destroy(test);
-
+    for(int i=0;i<5;i++)
+    {
+        free(str[i]);
+    }
+    free(str);
 }
 void stack_assert_pop()
 {
     Stack* test = stack_create();
     char** str = malloc(sizeof(char*)*5);
+    if(!str)return;
     for(int i=0;i<5;i++)
     {
         str[i]= malloc(sizeof(char));
+        if(!str[i])return;
         *str[i] = '1'+i;
     }
     for(int i=0;i<5;i++)
@@ -54,4 +63,9 @@ void stack_assert_pop()
     assert(stack_size(test)==4);
     stack_destroy(test);
     assert(*str[4]=='5');
+    for(int i=0;i<5;i++)
+    {
+        free(str[i]);
+    }
+    free(str);
 }
