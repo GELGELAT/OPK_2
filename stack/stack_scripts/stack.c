@@ -2,16 +2,14 @@
 #include <stdio.h>
 #include "stdlib.h"
 
-Stack* stack_create()
+void stack_create(Stack *stack)
 {
-    Stack*stack = malloc(sizeof(Stack));
-    if(!stack)return NULL;
+    if(!stack)return;
     stack->stack=malloc(sizeof(vptr));
-    if(!stack->stack)return NULL;
+    if(!stack->stack)return;
     stack->tail_pos=0;
     stack->size=0;
     stack->capacity=1;
-    return stack;
 }
 static void stack_re_alloc(Stack *stack)
 {
@@ -65,5 +63,6 @@ vptr stack_pop(Stack *stack)
     if(!stack)return NULL;
     vptr pop =stack->stack[stack->tail_pos-1];
     stack->tail_pos=stack->tail_pos-1;
+    stack->size--;
     return pop;
 }

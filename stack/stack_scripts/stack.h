@@ -10,9 +10,10 @@ typedef struct Stack
 } Stack;
 
 
-Stack *stack_create();
 
 void stack_print_stack(Stack *stack, size_t type_size);
+
+void stack_create(Stack *stack);
 
 void stack_destroy(Stack *stack);
 

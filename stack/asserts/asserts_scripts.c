@@ -7,11 +7,13 @@ void stack_asserts(void)
 {
     stack_assert_create_destroy();
     stack_assert_size_push();
+    stack_assert_pop();
 }
 
 void stack_assert_create_destroy()
 {
-    Stack* test = stack_create();
+    Stack* test = malloc(sizeof(Stack));
+    stack_create(test);
     stack_destroy(test);
     stack_destroy(NULL);
 
@@ -19,7 +21,8 @@ void stack_assert_create_destroy()
 
 void stack_assert_size_push()
 {
-    Stack* test = stack_create();
+    Stack* test = malloc(sizeof(Stack));
+    stack_create(test);
     int** str = malloc(sizeof(int*)*5);
     if(!str)return;
     for(int i=0;i<5;i++)
@@ -43,7 +46,8 @@ void stack_assert_size_push()
 }
 void stack_assert_pop()
 {
-    Stack* test = stack_create();
+    Stack* test = malloc(sizeof(Stack));
+    stack_create(test);
     char** str = malloc(sizeof(char*)*5);
     if(!str)return;
     for(int i=0;i<5;i++)
