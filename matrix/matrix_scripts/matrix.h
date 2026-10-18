@@ -29,13 +29,13 @@ Matrix *matrix_create_constants(size_t rows, size_t cols, double value);
 
 void matrix_destroy(Matrix *mat);
 
-void matrix_add(Matrix *mat1, Matrix *mat2);
+Matrix* matrix_add(Matrix *mat1, Matrix *mat2);
 
-void matrix_subtract(Matrix *mat1, Matrix *mat2);
+Matrix* matrix_subtract(Matrix *mat1, Matrix *mat2);
 
-void matrix_multiply_scalar(Matrix *mat, double value);
+Matrix* matrix_multiply_scalar(Matrix *mat, double value);
 
-void matrix_divide_scalar(Matrix *mat, double value);
+Matrix* matrix_divide_scalar(Matrix *mat, double value);
 
 bool matrix_is_valid(Matrix *mat);
 
@@ -58,3 +58,7 @@ void matrix_set_zero_resize(Matrix *mat, size_t rows, size_t cols);
 void matrix_set_constants_resize(Matrix *mat, size_t rows, size_t cols, double value);
 
 Matrix* matrix_transpose(Matrix *mat);
+
+double matrix_determinant(Matrix *mat);
+
+Matrix *matrix_inverse(Matrix *mat);

@@ -83,15 +83,15 @@ void matrix_assert_create_constants()
 void matrix_assert_multiply_subtract_add_multiply_scalar_divide_scalar()
 {
     Matrix* test = matrix_create_constants(4,5,69);
-    Matrix* test1 = matrix_create_constants(4,5,1);
-    matrix_add(test,test1);
-    matrix_assert_main_value(test,70);
-    matrix_subtract(test,test1);
-    matrix_assert_main_value(test,69);
-    matrix_multiply_scalar(test,10);
-    matrix_assert_main_value(test,690);
-    matrix_divide_scalar(test,10);
-    matrix_assert_main_value(test,69);
+    Matrix* test1 = matrix_create_constants(4,5,10);
+    Matrix* ntest1 = matrix_add(test,test1);
+    matrix_assert_main_value(ntest1,79);
+    Matrix* ntest2 = matrix_subtract(test,test1);
+    matrix_assert_main_value(ntest2,59);
+    Matrix* ntest3 = matrix_multiply_scalar(test,10);
+    matrix_assert_main_value(ntest3,690);
+    Matrix* ntest4 = matrix_divide_scalar(ntest3,10);
+    matrix_assert_main_value(ntest4,69);
     matrix_destroy(test);
     matrix_destroy(test1);
 }
@@ -145,4 +145,21 @@ void matrix_assert_transpose_inverse_determinant()
     matrix_print(test1);
     Matrix* ntest1 =matrix_transpose(test1);
     matrix_print(ntest1);
+    Matrix* test2 = matrix_create_identity(3);
+    assert(matrix_determinant(test2)==1);
+    matrix_set_element(test2,3,1,69);
+    matrix_set_element(test2,1,3,1);
+    assert(matrix_determinant(test2)==-68);
+    matrix_set_element(test2,2,1,1);
+    matrix_set_element(test2,3,1,1);
+    assert(matrix_determinant(test2)==0);
+    printf("inverse_test\n");
+    Matrix* itest = matrix_create(2,2);
+    matrix_set_element(itest,1,1,2);
+    matrix_set_element(itest,1,2,9);
+    matrix_set_element(itest,2,1,2);
+    matrix_set_element(itest,2,2,4);
+    matrix_print(itest);
+    Matrix* itest1=matrix_inverse(itest);
+    matrix_print(itest1);
 }

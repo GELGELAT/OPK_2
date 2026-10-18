@@ -1,6 +1,7 @@
 #include "matrix.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 void matrix_print(Matrix* matrix)
 {
     for (size_t i = 0; i < matrix->size_i; i++)
@@ -132,57 +133,63 @@ void matrix_destroy(Matrix* mat)
     free(mat->matrix);
     free(mat);
 }
-void matrix_add(Matrix* mat1, Matrix* mat2)
+ Matrix* matrix_add(Matrix* mat1, Matrix* mat2)
 {
-    if(mat1->size_i!=mat2->size_i||mat1->size_j!=mat2->size_j) return;
+    Matrix* nmat = matrix_create(mat1->size_i,mat1->size_j);
+    if(mat1->size_i!=mat2->size_i||mat1->size_j!=mat2->size_j) return NULL;
     for (size_t i = 0; i < mat1->size_i; i++)
     {
         for (size_t j = 0; j < mat1->size_j; j++)
         {
-            mat1->matrix[i][j]=mat1->matrix[i][j]+mat2->matrix[i][j];
+            nmat->matrix[i][j]=mat1->matrix[i][j]+mat2->matrix[i][j];
         }
         
     }
-    
+    return nmat;
 }
-void matrix_subtract(Matrix* mat1, Matrix* mat2)
+ Matrix* matrix_subtract(Matrix* mat1, Matrix* mat2)
 {
-    if(mat1->size_i!=mat2->size_i||mat1->size_j!=mat2->size_j) return;
+    Matrix* nmat = matrix_create(mat1->size_i,mat1->size_j);
+    if(mat1->size_i!=mat2->size_i||mat1->size_j!=mat2->size_j) return NULL;
     for (size_t i = 0; i < mat1->size_i; i++)
     {
         for (size_t j = 0; j < mat1->size_j; j++)
         {
-            mat1->matrix[i][j]=mat1->matrix[i][j]-mat2->matrix[i][j];
+            nmat->matrix[i][j]=mat1->matrix[i][j]-mat2->matrix[i][j];
         }
         
     }
-    
+    return nmat;
 }
-void matrix_multiply_scalar(Matrix* mat, double value)
+Matrix* matrix_multiply_scalar(Matrix* mat, double value)
 {
-    if(!mat) return;
+    Matrix* nmat = matrix_create(mat->size_i,mat->size_j);
+    if(!mat) return NULL;
     for (size_t i = 0; i < mat->size_i; i++)
     {
         for (size_t j = 0; j < mat->size_j; j++)
         {
-            mat->matrix[i][j]=mat->matrix[i][j]*value;
+            nmat->matrix[i][j]=mat->matrix[i][j]*value;
         }
         
     }
-    
+    return nmat;
+
 }
-void matrix_divide_scalar(Matrix* mat, double value)
+Matrix* matrix_divide_scalar(Matrix* mat, double value)
 {
-    if(!mat) return;
+    Matrix* nmat = matrix_create(mat->size_i,mat->size_j);
+    if(!mat) return NULL;
     for (size_t i = 0; i < mat->size_i; i++)
     {
         for (size_t j = 0; j < mat->size_j; j++)
         {
-            mat->matrix[i][j]=mat->matrix[i][j]/value;
+            nmat->matrix[i][j]=mat->matrix[i][j]/value;
         }
         
     }
-    
+    return nmat;
+
 }
 
 bool matrix_is_valid(Matrix* mat)
@@ -440,4 +447,121 @@ Matrix* matrix_transpose(Matrix* mat)
     nmat->size_j=mat->size_i;
     return nmat;
 
+}
+static Matrix*matrix_copy(Matrix* mat)
+{
+    Matrix* cmat = matrix_create(mat->size_i,mat->size_j);
+    for (size_t i = 0; i < mat->size_i; i++)
+    {
+        for (size_t j = 0; j < mat->size_j; j++)
+        {
+            cmat->matrix[i][j]=mat->matrix[i][j];
+        }
+        
+    }
+    return cmat;
+}
+d matrix_determinant(Matrix* mat)
+{
+    Matrix* wmat=matrix_copy(mat);
+    size_t size = wmat->size_i;
+    int sign =1;
+    d det =1;
+    for (size_t i = 0; i < size-1; i++)//идём столбцам
+    {
+        size_t max_elem_pos=i;
+        for (size_t j = i+1; j < size; j++)//ищем найб эл в столбце
+        {
+            if(fabs(wmat->matrix[j][i])>fabs(wmat->matrix[max_elem_pos][i]))
+            {
+                max_elem_pos=j;
+            }
+        }
+        if(wmat->matrix[max_elem_pos][i]==0)
+        {
+            return 0;
+        }
+        if(max_elem_pos!=i)//свапаем на верх строку с наиб эл уч знак
+        {
+            dp temp = wmat->matrix[max_elem_pos];
+            wmat->matrix[max_elem_pos]=wmat->matrix[i];
+            wmat->matrix[i]=temp;
+            sign = sign*-1;
+        }
+        for (size_t j = i+1; j < size; j++)//счит коэф вычита выч эл
+        {
+            d k_division = wmat->matrix[j][i]/wmat->matrix[i][i];
+            for (size_t k = i; k < size; k++)
+            {
+                wmat->matrix[j][k]=wmat->matrix[j][k]-k_division*wmat->matrix[i][k];
+            }
+            
+        }
+    }
+    for (size_t i = 0; i < size; i++)
+    {
+        det=det*wmat->matrix[i][i];
+        
+    }
+    matrix_destroy(wmat);
+    return det*sign;
+}
+static d matrix_minor(Matrix* mat, size_t rowIdx, size_t colIdx)
+{
+    size_t size = mat->size_i-1;
+    Matrix* mmat = matrix_create(size,size);
+    size_t m_i=0;
+    size_t m_j=0;
+    for (size_t i = 0; i < size+1; i++)
+    {
+        if(i==rowIdx)
+        {continue;}
+        for (size_t j = 0; j < size+1; j++)
+        {
+            if(j==colIdx)
+            {
+                continue;
+            }
+            else
+            {
+                mmat->matrix[m_i][m_j] = mat->matrix[i][j];
+                m_j++;
+            }
+        }
+        m_i++;
+        m_j=0;
+    }
+    d mdet=matrix_determinant(mmat);
+    int sign;
+    if((rowIdx+colIdx)%2==0)
+    {
+        return mdet;
+    }
+    else
+    {
+        return -mdet;
+    }
+
+}
+Matrix* matrix_inverse(Matrix* mat)
+{
+    size_t size = mat->size_i;
+    d det = matrix_determinant(mat);
+    Matrix* imat = matrix_create(size,size);
+    for (size_t i = 0; i < size; i++)
+    {
+        for (size_t j = 0; j < size; j++)
+        {
+            imat->matrix[i][j]=matrix_minor(mat,i,j);
+        }
+    }
+    Matrix* timat = matrix_transpose(imat);
+    for (size_t i = 0; i < size; i++)
+    {
+        for (size_t j = 0; j < size; j++)
+        {
+            timat->matrix[i][j]=timat->matrix[i][j]/det;
+        }
+    }
+    return timat;
 }
