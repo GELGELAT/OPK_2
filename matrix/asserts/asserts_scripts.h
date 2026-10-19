@@ -4,7 +4,8 @@
 void matrix_assert_main_value(Matrix *test, double value);
 void matrix_asserts();
 
-void matrix_assert_create_zero();
+
+void matrix_assert_create_zero_create_empty_create_vector_create();
 
 void matrix_assert_create_identity();
 

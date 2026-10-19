@@ -4,6 +4,11 @@
 #include <math.h>
 void matrix_print(Matrix* matrix)
 {
+    if(matrix==NULL)
+    {
+        printf("NULL\n");
+        return;
+    }
     for (size_t i = 0; i < matrix->size_i; i++)
     {
         for (size_t j = 0; j < matrix->size_j; j++)
@@ -105,6 +110,7 @@ Matrix* matrix_create_zero(size_t rows, size_t cols)
 }
 Matrix* matrix_create_identity(size_t size)
 {
+    if(size==0)return NULL;
     Matrix* m = matrix_create_zero(size,size);
     for (size_t i = 0; i < size; i++)
     {
@@ -114,6 +120,7 @@ Matrix* matrix_create_identity(size_t size)
 }
 Matrix* matrix_create_constants(size_t rows, size_t cols, double value)
 {
+    if (cols == 0||rows == 0) return NULL;
     Matrix* m = matrix_create_zero(rows,cols);
     for (size_t i = 0; i < rows; i++)
     {
@@ -126,6 +133,7 @@ Matrix* matrix_create_constants(size_t rows, size_t cols, double value)
 }
 void matrix_destroy(Matrix* mat)
 {
+    if(!mat)return;
     for (size_t i = 0; i < mat->size_i; i++)
     {
         free(mat->matrix[i]);
@@ -135,6 +143,7 @@ void matrix_destroy(Matrix* mat)
 }
  Matrix* matrix_add(Matrix* mat1, Matrix* mat2)
 {
+    if(!mat1||!mat2)return NULL;
     Matrix* nmat = matrix_create(mat1->size_i,mat1->size_j);
     if(mat1->size_i!=mat2->size_i||mat1->size_j!=mat2->size_j) return NULL;
     for (size_t i = 0; i < mat1->size_i; i++)
@@ -149,6 +158,7 @@ void matrix_destroy(Matrix* mat)
 }
  Matrix* matrix_subtract(Matrix* mat1, Matrix* mat2)
 {
+    if(!mat1||!mat2)return NULL;
     Matrix* nmat = matrix_create(mat1->size_i,mat1->size_j);
     if(mat1->size_i!=mat2->size_i||mat1->size_j!=mat2->size_j) return NULL;
     for (size_t i = 0; i < mat1->size_i; i++)
@@ -163,6 +173,7 @@ void matrix_destroy(Matrix* mat)
 }
 Matrix* matrix_multiply_scalar(Matrix* mat, double value)
 {
+    if(!mat)return NULL;
     Matrix* nmat = matrix_create(mat->size_i,mat->size_j);
     if(!mat) return NULL;
     for (size_t i = 0; i < mat->size_i; i++)
@@ -178,6 +189,7 @@ Matrix* matrix_multiply_scalar(Matrix* mat, double value)
 }
 Matrix* matrix_divide_scalar(Matrix* mat, double value)
 {
+    if(!mat||value==0)return NULL;
     Matrix* nmat = matrix_create(mat->size_i,mat->size_j);
     if(!mat) return NULL;
     for (size_t i = 0; i < mat->size_i; i++)
@@ -194,6 +206,7 @@ Matrix* matrix_divide_scalar(Matrix* mat, double value)
 
 bool matrix_is_valid(Matrix* mat)
 {
+    if(!mat)return false;
     if(mat->matrix==NULL||mat->size_i==0||mat->size_j==0)
     {
         return false;
@@ -205,6 +218,7 @@ bool matrix_is_valid(Matrix* mat)
 }
 void matrix_resize(Matrix* mat, size_t rows, size_t cols)
 {
+    if(!mat||rows==0||cols==0)return;
     dp* nmatrix = calloc(rows,sizeof(dp));
     if(!nmatrix)return;
     for (size_t i = 0; i < rows; i++)
@@ -257,14 +271,18 @@ void matrix_resize(Matrix* mat, size_t rows, size_t cols)
 }
 double matrix_get_element(Matrix* mat, size_t rowIdx, size_t colIdx)
 {
+    if(!mat||rowIdx==0||colIdx==0||mat->size_i<rowIdx||mat->size_j<colIdx)return 0;
+
     return mat->matrix[rowIdx-1][colIdx-1];
 }
 void matrix_set_element(Matrix* mat, size_t rowIdx, size_t colIdx, double value)
 {
+    if(!mat||rowIdx==0||colIdx==0||mat->size_i<rowIdx||mat->size_j<colIdx)return;
     mat->matrix[rowIdx-1][colIdx-1]=value;
 }
 void matrix_set_identity(Matrix* mat)
 {
+    if(!mat)return;
     for (size_t i = 0; i < mat->size_i; i++)
     {
         for (size_t j = 0; j < mat->size_j; j++)
@@ -284,6 +302,7 @@ void matrix_set_identity(Matrix* mat)
 }
 void matrix_set_zero(Matrix* mat)
 {
+    if(!mat)return;
     for (size_t i = 0; i < mat->size_i; i++)
     {
         for (size_t j = 0; j < mat->size_j; j++)
@@ -294,6 +313,7 @@ void matrix_set_zero(Matrix* mat)
 }
 void matrix_set_constants(Matrix* mat, double value)
 {
+    if(!mat)return;
     for (size_t i = 0; i < mat->size_i; i++)
     {
         for (size_t j = 0; j < mat->size_j; j++)
@@ -304,6 +324,7 @@ void matrix_set_constants(Matrix* mat, double value)
 }
 void matrix_set_identity_resize(Matrix* mat, size_t size)
 {
+    if(!mat||size==0)return;
     dp* nmatrix = calloc(size,sizeof(dp));
     if(!nmatrix)return;
     for (size_t i = 0; i < size; i++)
@@ -345,6 +366,7 @@ void matrix_set_identity_resize(Matrix* mat, size_t size)
 }
 void matrix_set_zero_resize(Matrix* mat, size_t rows, size_t cols)
 {
+    if(!mat||rows==0||cols==0)return;
     dp* nmatrix = calloc(rows,sizeof(dp));
     if(!nmatrix)return;
     for (size_t i = 0; i < rows; i++)
@@ -382,6 +404,7 @@ void matrix_set_zero_resize(Matrix* mat, size_t rows, size_t cols)
 }
 void matrix_set_constants_resize(Matrix* mat, size_t rows, size_t cols, double value)
 {
+    if(!mat||rows==0||cols==0)return;
     dp* nmatrix = calloc(rows,sizeof(dp));
     if(!nmatrix)return;
     for (size_t i = 0; i < rows; i++)
@@ -419,6 +442,8 @@ void matrix_set_constants_resize(Matrix* mat, size_t rows, size_t cols, double v
 }
 Matrix* matrix_transpose(Matrix* mat)
 {
+    if(!mat)return NULL;
+
     Matrix* nmat = malloc(sizeof(Matrix));
     nmat->matrix = malloc(mat->size_j*sizeof(dp));
     if(!nmat->matrix)return NULL;
@@ -450,6 +475,8 @@ Matrix* matrix_transpose(Matrix* mat)
 }
 static Matrix*matrix_copy(Matrix* mat)
 {
+    if(!mat)return NULL;
+
     Matrix* cmat = matrix_create(mat->size_i,mat->size_j);
     for (size_t i = 0; i < mat->size_i; i++)
     {
@@ -463,6 +490,7 @@ static Matrix*matrix_copy(Matrix* mat)
 }
 d matrix_determinant(Matrix* mat)
 {
+    if(!mat)return 0;
     Matrix* wmat=matrix_copy(mat);
     size_t size = wmat->size_i;
     int sign =1;
@@ -545,8 +573,11 @@ static d matrix_minor(Matrix* mat, size_t rowIdx, size_t colIdx)
 }
 Matrix* matrix_inverse(Matrix* mat)
 {
+    if(!mat)return NULL;
+
     size_t size = mat->size_i;
     d det = matrix_determinant(mat);
+    if(det==0)return NULL;
     Matrix* imat = matrix_create(size,size);
     for (size_t i = 0; i < size; i++)
     {
