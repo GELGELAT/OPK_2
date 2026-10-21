@@ -7,3 +7,5 @@ void stack_assert_create_destroy();
 void stack_assert_size_push();
 
 void stack_assert_pop();
+
+void stack_assert_big_test();
