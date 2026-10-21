@@ -1,6 +1,8 @@
 #pragma once
 #include "matrix.h"
 
+void matrix_print(Matrix *matrix);
+
 void matrix_assert_main_value(Matrix *test, double value);
 void matrix_asserts();
 

@@ -2,6 +2,40 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
+Matrix* matrix_from_arr_to_mat(double* arr,size_t rows, size_t cols)
+{
+    Matrix* mat=matrix_create(rows,cols);
+    if(!mat)return NULL;
+    size_t iter = 0;
+    for (size_t i = 0; i < rows; i++)
+    {
+        for (size_t j = 0; j < cols; j++)
+        {
+            
+            mat->matrix[i][j]=arr[iter];
+            iter++;
+        }
+        
+    }
+    return mat;
+}
+void matrix_print(Matrix* matrix)
+{
+    if(matrix==NULL)
+    {
+        printf("NULL\n");
+        return;
+    }
+    for (size_t i = 0; i < matrix->size_i; i++)
+    {
+        for (size_t j = 0; j < matrix->size_j; j++)
+        {
+            printf("%lf ",matrix->matrix[i][j]);
+        }
+        printf("\n");
+    }
+    
+}
 void matrix_assert_main_value(Matrix* test,double value)
 {
     for (size_t i = 0; i < test->size_i; i++)
@@ -99,6 +133,13 @@ void matrix_assert_create_constants()
 }
 void matrix_assert_multiply_subtract_add_multiply_scalar_divide_scalar()
 {
+    double mat1[]={4,6,3,1,6,6};
+    double mat2[]={1,9,9,9,2,9};
+    Matrix* testm1 = matrix_from_arr_to_mat(mat1,3,2);
+    Matrix* testm2 = matrix_from_arr_to_mat(mat2,2,3);
+    Matrix* testm = matrix_multiply(testm1,testm2);
+    printf("multiply test\n");
+    matrix_print(testm);
     Matrix* test = matrix_create_constants(4,5,69);
     Matrix* test1 = matrix_create_constants(4,5,10);
     Matrix* ntest1 = matrix_add(test,test1);
@@ -136,6 +177,7 @@ void matrix_assert_is_valid_resize()
     matrix_print(test1);
     matrix_resize(test1,3,4);
     matrix_resize(test1,0,4);
+    printf("->\n");
     matrix_print(test1);
     matrix_destroy(test);
     matrix_destroy(test1);
@@ -193,6 +235,8 @@ void matrix_assert_transpose_inverse_determinant()
     matrix_print(test1);
     Matrix* ntest1 =matrix_transpose(test1);
     matrix_transpose(NULL);
+        printf("->\n");
+
     matrix_print(ntest1);
     Matrix* test2 = matrix_create_identity(3);
     assert(matrix_determinant(test2)==1);
@@ -210,6 +254,8 @@ void matrix_assert_transpose_inverse_determinant()
     matrix_set_element(itest,2,1,2);
     matrix_set_element(itest,2,2,4);
     matrix_print(itest);
+        printf("->\n");
+
     Matrix* itest1=matrix_inverse(itest);
     matrix_print(itest1);
     matrix_set_element(itest,1,1,1);
@@ -224,5 +270,14 @@ void matrix_assert_transpose_inverse_determinant()
     matrix_destroy(itest);
     matrix_destroy(itest2);
     matrix_destroy(itest1);
-
+    printf("Big test\n");
+    double big[] =
+    {
+        9,6,5,5,5,
+        6,5,2,8,9,
+        96,9,5,0,1,
+        38,3,2,0,2,
+        2,7,2,6,5
+    };
+    Matrix* big_m=matrix_from_arr_to_mat(big,5,5);
 }

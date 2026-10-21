@@ -2,23 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-void matrix_print(Matrix* matrix)
-{
-    if(matrix==NULL)
-    {
-        printf("NULL\n");
-        return;
-    }
-    for (size_t i = 0; i < matrix->size_i; i++)
-    {
-        for (size_t j = 0; j < matrix->size_j; j++)
-        {
-            printf("%lf ",matrix->matrix[i][j]);
-        }
-        printf("\n");
-    }
-    
-}
+
 
 Matrix* matrix_create_empty()
 {
@@ -112,6 +96,7 @@ Matrix* matrix_create_identity(size_t size)
 {
     if(size==0)return NULL;
     Matrix* m = matrix_create_zero(size,size);
+    if(!m)return NULL;
     for (size_t i = 0; i < size; i++)
     {
         m->matrix[i][i]=1;    
@@ -122,6 +107,7 @@ Matrix* matrix_create_constants(size_t rows, size_t cols, double value)
 {
     if (cols == 0||rows == 0) return NULL;
     Matrix* m = matrix_create_zero(rows,cols);
+    if(!m)return NULL;
     for (size_t i = 0; i < rows; i++)
     {
         for (size_t j = 0; j < cols; j++)
@@ -144,8 +130,9 @@ void matrix_destroy(Matrix* mat)
  Matrix* matrix_add(Matrix* mat1, Matrix* mat2)
 {
     if(!mat1||!mat2)return NULL;
-    Matrix* nmat = matrix_create(mat1->size_i,mat1->size_j);
     if(mat1->size_i!=mat2->size_i||mat1->size_j!=mat2->size_j) return NULL;
+    Matrix* nmat = matrix_create(mat1->size_i,mat1->size_j);
+    
     for (size_t i = 0; i < mat1->size_i; i++)
     {
         for (size_t j = 0; j < mat1->size_j; j++)
@@ -160,6 +147,7 @@ void matrix_destroy(Matrix* mat)
 {
     if(!mat1||!mat2)return NULL;
     Matrix* nmat = matrix_create(mat1->size_i,mat1->size_j);
+    if(!nmat)return NULL;
     if(mat1->size_i!=mat2->size_i||mat1->size_j!=mat2->size_j) return NULL;
     for (size_t i = 0; i < mat1->size_i; i++)
     {
@@ -175,7 +163,7 @@ Matrix* matrix_multiply_scalar(Matrix* mat, double value)
 {
     if(!mat)return NULL;
     Matrix* nmat = matrix_create(mat->size_i,mat->size_j);
-    if(!mat) return NULL;
+    if(!nmat) return NULL;
     for (size_t i = 0; i < mat->size_i; i++)
     {
         for (size_t j = 0; j < mat->size_j; j++)
@@ -191,7 +179,7 @@ Matrix* matrix_divide_scalar(Matrix* mat, double value)
 {
     if(!mat||value==0)return NULL;
     Matrix* nmat = matrix_create(mat->size_i,mat->size_j);
-    if(!mat) return NULL;
+    if(!nmat) return NULL;
     for (size_t i = 0; i < mat->size_i; i++)
     {
         for (size_t j = 0; j < mat->size_j; j++)
@@ -457,6 +445,7 @@ Matrix* matrix_transpose(Matrix* mat)
                 free(nmat->matrix[j]);
             }
             free(nmat->matrix);
+            free(nmat);
             return NULL;
         }
     }
@@ -478,6 +467,7 @@ static Matrix*matrix_copy(Matrix* mat)
     if(!mat)return NULL;
 
     Matrix* cmat = matrix_create(mat->size_i,mat->size_j);
+    if(!cmat)return NULL;
     for (size_t i = 0; i < mat->size_i; i++)
     {
         for (size_t j = 0; j < mat->size_j; j++)
@@ -490,8 +480,9 @@ static Matrix*matrix_copy(Matrix* mat)
 }
 d matrix_determinant(Matrix* mat)
 {
-    if(!mat)return 0;
+    if(!mat || mat->size_i!=mat->size_j)return 0;
     Matrix* wmat=matrix_copy(mat);
+    if(!wmat)return 0;
     size_t size = wmat->size_i;
     int sign =1;
     d det =1;
@@ -538,6 +529,7 @@ static d matrix_minor(Matrix* mat, size_t rowIdx, size_t colIdx)
 {
     size_t size = mat->size_i-1;
     Matrix* mmat = matrix_create(size,size);
+    if(!mmat)return 0;
     size_t m_i=0;
     size_t m_j=0;
     for (size_t i = 0; i < size+1; i++)
@@ -573,12 +565,12 @@ static d matrix_minor(Matrix* mat, size_t rowIdx, size_t colIdx)
 }
 Matrix* matrix_inverse(Matrix* mat)
 {
-    if(!mat)return NULL;
-
+    if(!mat||mat->size_i!=mat->size_j)return NULL;
     size_t size = mat->size_i;
     d det = matrix_determinant(mat);
     if(det==0)return NULL;
     Matrix* imat = matrix_create(size,size);
+    if(!imat)return NULL;
     for (size_t i = 0; i < size; i++)
     {
         for (size_t j = 0; j < size; j++)
@@ -587,6 +579,11 @@ Matrix* matrix_inverse(Matrix* mat)
         }
     }
     Matrix* timat = matrix_transpose(imat);
+    if(!timat)
+    {
+        matrix_destroy(imat);
+        return NULL;
+    }
     for (size_t i = 0; i < size; i++)
     {
         for (size_t j = 0; j < size; j++)
@@ -595,4 +592,27 @@ Matrix* matrix_inverse(Matrix* mat)
         }
     }
     return timat;
+}
+Matrix* matrix_multiply(Matrix* mat1, Matrix* mat2)
+{
+    if(!matrix_is_valid(mat1)||!matrix_is_valid(mat2)||mat1->size_j!=mat2->size_i)return NULL;
+    Matrix* nmat=matrix_create(mat1->size_i,mat2->size_j);
+    if(!nmat)return NULL;
+    for (size_t i = 0; i < mat1->size_i; i++)
+    {
+        for (size_t j = 0; j < mat2->size_j; j++)
+        {
+            double sum = 0;
+            for (size_t x = 0; x < mat1->size_j; x++)
+            {
+                
+                sum=sum+mat1->matrix[i][x]*mat2->matrix[x][j];
+                
+                
+            }
+            nmat->matrix[i][j]=sum;
+        }
+        
+    }
+    return nmat;
 }

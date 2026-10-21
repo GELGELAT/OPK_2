@@ -13,7 +13,6 @@ typedef struct Matrix
 
 } Matrix;
 
-void matrix_print(Matrix *matrix);
 
 Matrix *matrix_create_empty();
 
@@ -62,3 +61,5 @@ Matrix* matrix_transpose(Matrix *mat);
 double matrix_determinant(Matrix *mat);
 
 Matrix *matrix_inverse(Matrix *mat);
+
+Matrix *matrix_multiply(Matrix *mat1, Matrix *mat2);
