@@ -2,6 +2,8 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "sort_comparators.h"
+
 Matrix* matrix_from_arr_to_mat(double* arr,size_t rows, size_t cols)
 {
     Matrix* mat=matrix_create(rows,cols);
@@ -270,6 +272,18 @@ void matrix_assert_transpose_inverse_determinant()
     matrix_destroy(itest);
     matrix_destroy(itest2);
     matrix_destroy(itest1);
+    printf("inverse_test_big\n");
+    double big1[] =
+    {
+        8,1,9,6,
+        6,2,5,4,
+        1,5,6,9,
+        6,6,6,8
+    };
+    Matrix* big_m1=matrix_from_arr_to_mat(big1,4,4);
+    printf("->\n");
+    Matrix* imat=matrix_inverse(big_m1);
+    matrix_print(imat);
     printf("Big test\n");
     double big[] =
     {
@@ -280,4 +294,7 @@ void matrix_assert_transpose_inverse_determinant()
         2,7,2,6,5
     };
     Matrix* big_m=matrix_from_arr_to_mat(big,5,5);
+    d det = matrix_determinant(big_m);
+    d det_1=-10642;
+    assert(cmp_double(&det,&det_1)==0);
 }
