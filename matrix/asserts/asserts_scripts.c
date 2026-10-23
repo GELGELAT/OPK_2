@@ -281,10 +281,10 @@ void matrix_assert_transpose_inverse_determinant()
         6,6,6,8
     };
     Matrix* big_m1=matrix_from_arr_to_mat(big1,4,4);
+    matrix_print(big_m1); 
     printf("->\n");
     Matrix* imat=matrix_inverse(big_m1);
-    matrix_print(imat);
-    printf("Big test\n");
+    matrix_print(imat); 
     double big[] =
     {
         9,6,5,5,5,

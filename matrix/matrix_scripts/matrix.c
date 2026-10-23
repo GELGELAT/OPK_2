@@ -433,8 +433,13 @@ Matrix* matrix_transpose(Matrix* mat)
     if(!mat)return NULL;
 
     Matrix* nmat = malloc(sizeof(Matrix));
+    if(!nmat)return NULL;
     nmat->matrix = malloc(mat->size_j*sizeof(dp));
-    if(!nmat->matrix)return NULL;
+    if(!nmat->matrix)
+    {
+        free(nmat);
+        return NULL;
+    }
     for (size_t i = 0; i < mat->size_j; i++)
     {
         nmat->matrix[i] = malloc(mat->size_i*sizeof(d));
@@ -552,7 +557,6 @@ static d matrix_minor(Matrix* mat, size_t rowIdx, size_t colIdx)
         m_j=0;
     }
     d mdet=matrix_determinant(mmat);
-    int sign;
     if((rowIdx+colIdx)%2==0)
     {
         return mdet;
