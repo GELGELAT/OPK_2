@@ -1,7 +1,9 @@
 #include "red_black_tree.h"
-#include <stdlib.h>
+#include "stack.h"
+
 void tree_create(Tree *tree, CompareFunc cmp)
 {
+    if(!tree||!cmp)return;
     tree->cmp=cmp;
     tree->root=NULL;
 }
@@ -469,4 +471,80 @@ Pointer tree_find(Tree *tree, Pointer data)
         }
     }
     return NULL;
+}
+size_t tree_size(Tree *tree)//симетричный обход
+{
+    
+    if (!tree||!tree->root)
+    return 0;
+    size_t size=0;
+    Stack* stack = malloc(sizeof(Stack));
+    stack_create(stack);
+    Node* cur_node = tree->root;
+    while(cur_node||stack->size>0)
+    {
+        while(cur_node)
+        {
+            stack_push(stack, cur_node);
+            cur_node=cur_node->left;
+        }
+        cur_node = stack_pop(stack);
+        size++;
+        cur_node=cur_node->right;
+    }
+    stack_destroy(stack);
+    free(stack);
+
+    return size;
+}
+void tree_destroy(Tree *tree)
+{
+    if (!tree||!tree->root)
+    {    free(tree);
+        return;
+    }
+    
+    Stack* stack = malloc(sizeof(Stack));
+    stack_create(stack);
+    Node* cur_node = tree->root;
+    while(cur_node||stack->size>0)
+    {
+        while(cur_node)
+        {
+            stack_push(stack, cur_node);
+            cur_node=cur_node->left;
+        }
+        cur_node = stack_pop(stack);
+        Node* right_node = cur_node->right;
+        free(cur_node);
+        cur_node=right_node;
+    }
+    stack_destroy(stack);
+    free(tree);
+    free(stack);
+
+    return;
+}
+
+void tree_foreach(Tree *tree, void (*func)(Pointer data, void *arg), void *arg)
+{
+    if (!tree||!tree->root)
+    return;
+    Stack* stack = malloc(sizeof(Stack));
+    stack_create(stack);
+    Node* cur_node = tree->root;
+    while(cur_node||stack->size>0)
+    {
+        while(cur_node)
+        {
+            stack_push(stack, cur_node);
+            cur_node=cur_node->left;
+        }
+        cur_node = stack_pop(stack);
+        func(cur_node->value,arg);
+        cur_node=cur_node->right;
+    }
+    stack_destroy(stack);
+    free(stack);
+    return;
 }

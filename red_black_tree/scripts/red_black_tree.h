@@ -1,9 +1,10 @@
 #pragma once
-#include <stdbool.h>
+#include <stdlib.h>
+
 typedef void *Pointer;
 typedef int (*CompareFunc)(Pointer a, Pointer b);
 
-typedef enum {BLACK ,RED  } Color;
+typedef enum {BLACK ,RED} Color;
 
 typedef struct Node {
     Pointer value;
@@ -31,7 +32,14 @@ static void right_rotate(Tree *tree, Node *x);
 
 static void insert_check(Tree *tree, Node *n);
 
+Pointer tree_delete(Tree *tree, Pointer data);
 
 static void delete_check(Tree *tree, Node *main, Node *parent);
 
 Pointer tree_find(Tree *tree, Pointer data);
+
+size_t tree_size(Tree *tree);
+
+void tree_destroy(Tree *tree);
+
+void tree_foreach(Tree *tree, void (*func)(Pointer data, void *arg), void *arg);
