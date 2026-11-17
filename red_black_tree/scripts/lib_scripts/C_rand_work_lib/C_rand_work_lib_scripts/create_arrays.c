@@ -1,6 +1,7 @@
 #include "create_arrays.h"
 #include <stdlib.h>
 #include "rand_main.h"
+#include "stdio.h"
 
 float* create_rand_with_in_arr_f(int amount, float min,float max)
 {
@@ -68,5 +69,7 @@ char** rand_arr_create_with_in_string(int amount,int min_len,int max_len, char m
         char* rand_str = rand_arr_create_with_in_char(rand_len,min,max);
         arr[i]=rand_str;
     }
+
+    
     return arr;
 }

@@ -18,5 +18,5 @@ int rand_with_in_int(int min, int max)
 char rand_with_in_char(char min, char max)
 {
     double coefficient = (double)rand() / (RAND_MAX);
-    return (min + (coefficient*(max-min)));
+    return (char)(min + (coefficient*(max-min)));
 }

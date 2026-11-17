@@ -1,6 +1,6 @@
 #include "red_black_tree.h"
 #include "stack.h"
-
+#include <stdio.h>
 void tree_create(Tree *tree, CompareFunc cmp)
 {
     if(!tree||!cmp)return;
