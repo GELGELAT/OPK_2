@@ -62,8 +62,7 @@ void compil_asserts()
     assert_tree_destroy();
     assert_tree_size();
     assert_tree_find();
-    assert_tree_insert();
-    assert_tree_delete();
+    assert_tree_insert_delete();
     assert_tree_foreach();
 
 }
@@ -77,52 +76,74 @@ void assert_tree_create()
 }
 void assert_tree_destroy()
 {
-    
+    float arr1[] = {10,5,20,3};
+    Tree* tree1 =from_arr_to_tree(arr1,4,sizeof(float),cmp_float);
+    tree_destroy(tree1);
+    tree_destroy(NULL);
 }
 void assert_tree_size()
 {
     float arr1[] = {10,5,20,3};
     Tree* tree1 =from_arr_to_tree(arr1,4,sizeof(float),cmp_float);
     assert(tree_size(tree1)==4);
+    assert(tree_size(NULL)==0);
 }
 void assert_tree_find()
 {
-    
+    float arr1[] = {10,5,20,3};
+    Tree* tree1 =from_arr_to_tree(arr1,4,sizeof(float),cmp_float);
+    assert((*(float*)tree_find(tree1,&arr1[1]))==5);
+    assert(tree_find(tree1,NULL)==NULL);
+    assert(tree_find(NULL,&arr1[1])==NULL);
 }
-void assert_tree_insert()
+void assert_tree_insert_delete()
 {
     printf("assert_tree_insert\n");
-    printf("1) uncle: red\n");
+
     float arr1[] = {10,5,20,3};
     Tree* tree1 =from_arr_to_tree(arr1,4,sizeof(float),cmp_float);
     tree_print_float_with_color(tree1);
-    printf("2) uncle: black\n");
+    printf("2 \n");
     float a = 6;
     tree_insert(tree1,&a);
     tree_delete(tree1,&arr1[2]);
     tree_print_float_with_color(tree1);
+    tree_delete(NULL,&arr1[2]);
+    tree_delete(tree1,NULL);
+    tree_insert(NULL,&arr1[2]);
+    tree_insert(tree1,NULL);
+    float b = 9;
+    float c = 9;
+    assert(tree_insert(tree1,&b)==NULL);
+    assert((float*)tree_insert(tree1,&c)==&b);
+    assert((float*)tree_delete(tree1,&c)==&c);
+    assert((float*)tree_delete(tree1,&c)==NULL);
     tree_destroy(tree1);
 
- /*
+ 
     float* arrbig1 = create_rand_with_in_arr_f(1000,-100,100);
     Tree* tree_big1 =from_arr_to_tree(arrbig1,1000,sizeof(float),cmp_float); 
     char** arrbig2 = rand_arr_create_with_in_string(1000,1,40,'1','9');
     Tree* tree_big2 =from_arr_to_tree(arrbig2,1000,sizeof(char*),cmp_string); 
+
+    
     tree_destroy(tree_big1);
     tree_destroy(tree_big2);
-    */
+    
 }
-void assert_tree_delete()
+static void test_func(Pointer data, void *arg)
 {
-    float arr1[] = {10,5,20,3};
-    Tree* tree1 =from_arr_to_tree(arr1,4,sizeof(float),cmp_float);
-    float a = 6;
-    tree_insert(tree1,&a);
-    tree_delete(tree1,&arr1[2]);
-    tree_print_float_with_color(tree1);
-    tree_destroy(tree1);
+    float* sum = (float*)arg;
+    *sum+= *(float*)data;
 }
 void assert_tree_foreach()
 {
-    
+    float arr1[] = {10,5,20,3};
+    Tree* tree1 =from_arr_to_tree(arr1,4,sizeof(float),cmp_float);
+    float a = 0;
+    tree_foreach(tree1,test_func,&a);
+    assert(a==38);
+    tree_foreach(NULL,test_func,&a);
+    tree_foreach(tree1,NULL,&a);
+    tree_foreach(tree1,test_func,NULL);
 }

@@ -23,8 +23,8 @@ void assert_tree_size();
 
 void assert_tree_find();
 
-void assert_tree_insert();
+void assert_tree_insert_delete();
 
-void assert_tree_delete();
+
 
 void assert_tree_foreach();

@@ -19,6 +19,8 @@ static Node* crt_n(Pointer value,int color,Pointer parent)
 }
 Pointer tree_insert(Tree *tree, Pointer data)
 {
+    if(!tree||!data)
+    return NULL;
     Node* new_n = crt_n(data,RED,NULL);
     if(tree->root==NULL)
     {
@@ -62,6 +64,7 @@ Pointer tree_insert(Tree *tree, Pointer data)
         }
     }
     insert_check(tree, new_n);
+    return NULL;
 }
 
 static void left_rotate(Tree* tree, Node* n)
@@ -182,7 +185,7 @@ static void insert_check(Tree* tree,Node* n)
 
 Pointer tree_delete(Tree *tree, Pointer data)
 {
-    if(tree->root==NULL)
+    if(!tree||tree->root==NULL||!data)
     {
         return NULL;
 
@@ -329,7 +332,7 @@ Pointer tree_delete(Tree *tree, Pointer data)
     }
     return NULL;
 }
-void delete_check(Tree* tree, Node* n, Node* parent_n)
+static void delete_check(Tree* tree, Node* n, Node* parent_n)
 {
     
     //случай черный черный обрабатываем 4 случая
@@ -445,7 +448,7 @@ void delete_check(Tree* tree, Node* n, Node* parent_n)
 }
 Pointer tree_find(Tree *tree, Pointer data)
 {
-    if(tree->root==NULL)
+    if(!tree||tree->root==NULL||!data)
     {
         return NULL;
     }
@@ -500,7 +503,8 @@ size_t tree_size(Tree *tree)//симетричный обход
 void tree_destroy(Tree *tree)
 {
     if (!tree||!tree->root)
-    {    free(tree);
+    {    
+        free(tree);
         return;
     }
     
@@ -528,7 +532,7 @@ void tree_destroy(Tree *tree)
 
 void tree_foreach(Tree *tree, void (*func)(Pointer data, void *arg), void *arg)
 {
-    if (!tree||!tree->root)
+    if (!tree||!tree->root||!func||!arg)
     return;
     Stack* stack = malloc(sizeof(Stack));
     stack_create(stack);
