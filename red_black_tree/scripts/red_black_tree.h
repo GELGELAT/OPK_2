@@ -22,19 +22,14 @@ typedef struct tTree
 
 void tree_create(Tree *tree, CompareFunc cmp);
 
-static Node *crt_n(Pointer value, int color, Pointer parent);
 
 Pointer tree_insert(Tree *tree, Pointer data);
 
-static void left_rotate(Tree *tree, Node *x);
 
-static void right_rotate(Tree *tree, Node *x);
 
-static void insert_check(Tree *tree, Node *n);
 
 Pointer tree_delete(Tree *tree, Pointer data);
 
-static void delete_check(Tree *tree, Node *main, Node *parent);
 
 Pointer tree_find(Tree *tree, Pointer data);
 

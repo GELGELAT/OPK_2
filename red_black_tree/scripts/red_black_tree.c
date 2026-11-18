@@ -1,6 +1,16 @@
 #include "red_black_tree.h"
 #include "stack.h"
 #include <stdio.h>
+static Node *crt_n(Pointer value, int color, Pointer parent);
+
+static void left_rotate(Tree *tree, Node *x);
+
+static void right_rotate(Tree *tree, Node *x);
+
+static void insert_check(Tree *tree, Node *n);
+
+static void delete_check(Tree *tree, Node *main, Node *parent);
+
 void tree_create(Tree *tree, CompareFunc cmp)
 {
     if(!tree||!cmp)return;

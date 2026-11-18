@@ -1,6 +1,41 @@
 #include "asserts_script.h"
 #include "stack.h"
 #include "assert.h"
+static Tree *from_arr_to_tree(void *arr, size_t amount, TYPE type_size, CompareFunc cmp);
+
+static void print_tree_func_float(Pointer data, Pointer arg);
+
+static void print_tree_func_string(Pointer data, Pointer arg);
+
+static void print_tree(Tree *tree, TYPE type);
+
+static void balance_check(Tree *tree)
+{
+    Node* n = tree->root;
+    size_t first_bh = 0;
+    size_t second_bh = 0;
+    while (n)
+    {
+        if(n->color==BLACK)
+        first_bh +=1;
+        size_t turn = rand_with_in_int(0,1);
+        if(turn == 0) n=n->left;
+        else n=n->right;
+    }
+    n = tree->root;
+     while (n)
+    {
+        if(n->color==BLACK)
+        second_bh +=1;
+        size_t turn = rand_with_in_int(0,1);
+        if(turn == 0) n=n->left;
+        else n=n->right;
+    }
+    printf("%d, %d",first_bh,second_bh);
+    printf("\n");
+    return;
+}
+
 static void tree_print_float_with_color(Tree *tree)
 {
     if (!tree||!tree->root)
@@ -120,9 +155,13 @@ void assert_tree_insert_delete()
     assert((float*)tree_delete(tree1,&c)==NULL);
     tree_destroy(tree1);
 
+    float arr2[] = {10,5,20,3,14,8,9,12};
+    Tree* tree2 =from_arr_to_tree(arr1,8,sizeof(float),cmp_float);
+    balance_check(tree2);
  
     float* arrbig1 = create_rand_with_in_arr_f(1000,-100,100);
     Tree* tree_big1 =from_arr_to_tree(arrbig1,1000,sizeof(float),cmp_float); 
+    balance_check(tree_big1);
     char** arrbig2 = rand_arr_create_with_in_string(1000,1,40,'1','9');
     Tree* tree_big2 =from_arr_to_tree(arrbig2,1000,sizeof(char*),cmp_string); 
 
